@@ -5,12 +5,15 @@
 #include <vector>
 #include <string>
 #include <direct.h>
+#include <ctime>
+#include <iostream>
+
 using namespace cv;
 CascadeClassifier face_cascade, eyes_cascade;
 //std::vector<Rect> centerPositions;
 //std::vector<int> colorIndex;
 Scalar colors[] = { Scalar(255,0,0),Scalar(0,255,0), Scalar(0,0,255), Scalar(255,255,0), Scalar(0,255,255), Scalar(255,0,255) };
-
+unsigned t0, t1;
 
 void detectFaces(Mat *frame)
 {
@@ -41,6 +44,7 @@ void detectFaces(Mat *frame)
 
 int main()
 {
+	t0 = clock();
 	face_cascade.load("haarcascade_frontalface_alt.xml");
 	//face_cascade.load("lbpcascade_frontalface.xml");
 	//eyes_cascade.load("haarcascade_eye.xml");
@@ -71,6 +75,9 @@ int main()
 		}
 	}
 	
-	waitKey(0);
+	//waitKey(0);
+	t1 = clock();
+	double time = (double(t1 - t0) / CLOCKS_PER_SEC);
+	std::cout << "Execution Time: " << time << std::endl;
 	return 1;
 }
